@@ -16,7 +16,7 @@ namespace EnglishApp
       user.LoadData();
       user.LoginIn("Vova");
       AppWordsService exercises = new AppWordsService(user);
-      //Console.WriteLine(exercises.GetNewWord());
+      Console.WriteLine(exercises.GetNewWord());
       //Console.WriteLine("Yes/No");
       //var ans = Console.ReadLine();
       //var result = exercises.Check(ans);

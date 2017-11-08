@@ -16,8 +16,10 @@ namespace EnglishTutorial.Application
     public string GetNewWord()
     {
       Random random = new Random();
-      if (!CurrentSession.Vocabulary.Any(item => item.Count != 3))
-        throw new Exception("Вы изучили все слова");
+      if (UnexaminedWords() == false)
+      {
+        return "Вы изучили все слова";
+      }
       do
       {
         _lastWordNum = random.Next(EnglishWords.Count);
@@ -104,6 +106,20 @@ namespace EnglishTutorial.Application
         }
       }
       throw new Exception("что-то пошло не так");
+    }
+
+    private bool UnexaminedWords()
+    {
+      if (CurrentSession.Vocabulary.Any(item => item.Count != 3))
+      {
+        return true;
+      }
+      foreach (var word in EnglishWords)
+      {
+        if (!CurrentSession.Vocabulary.Any(item => item.Word == word.Word))
+          return true;
+      }
+      return false;
     }
     public List<EnglishWord> EnglishWords { set; get; }
     public User CurrentSession;
