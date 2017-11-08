@@ -1,0 +1,11 @@
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\obj\Debug\EnglishApp.csproj.CoreCompileInputs.cache
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\bin\Debug\EnglishApp.exe.config
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\bin\Debug\EnglishApp.exe
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\bin\Debug\EnglishApp.pdb
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\bin\Debug\EnglishTutorial.dll
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\bin\Debug\EnglishTutorial.pdb
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\obj\Debug\EnglishApp.csprojResolveAssemblyReference.cache
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\obj\Debug\EnglishApp.exe
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\obj\Debug\EnglishApp.pdb
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\EnglishApp\bin\Debug\Newtonsoft.Json.xml
