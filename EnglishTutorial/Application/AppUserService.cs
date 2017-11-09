@@ -10,57 +10,62 @@ namespace EnglishTutorial.Application
   {
     public AppUserService()
     {
-      _wordRepository = new EnglishWordsFileRepository();
-      _userListRepository = new UsersListFileRepository();
-    }
-    ~AppUserService()
-    {
-      _userDataRepository.SaveUserData(CurrentSession);
-      _userListRepository.SaveUserList(_userList);
     }
 
 
-    public void SingUp(string nickname)
+    public bool SingUp(string nickname)
     {
       if (!_userList.Any(name => name == nickname))
       {
-        _userDataRepository = new UserDataFileRepository(nickname);
-        CurrentSession = new User();
+        Sessions.Add(new User(nickname));
         _userList.Add(nickname);
+        _userListRepository.SaveUserList(_userList);
+        _userDataRepository.SaveUserData(Sessions[Sessions.Count-1]);
+        return true;
       }
       else
       {
-        throw new InvalidOperationException("Пользователь с таким именем уже существует");
+        return false;
       }
     }
 
-    public void LoginIn(string nickname)
+    public bool LoginIn(string nickname)
     {
       if (_userList.Any(nick => nick == nickname))
       {
-        _userDataRepository = new UserDataFileRepository(nickname);
-        CurrentSession = _userDataRepository.LoadUserData();
+        Sessions.Add(_userDataRepository.LoadUserData(nickname));
+        return true;
       }
       else
       {
-        throw new InvalidOperationException("Пользователь с таким именем не существует");
+        return false;
       }
     }
 
-    public void LoadData()
+    public void SaveData(User currentSession)
     {
+      foreach (var user in Sessions)
+      {
+        if (user.Nickname == currentSession.Nickname)
+        {
+          Sessions[Sessions.IndexOf(user)] = currentSession;
+          _userDataRepository.SaveUserData(currentSession);
+        }
+        break;
+      }
+    }
+    public void LoadVocabularyAndUserList()
+    {
+      _wordRepository = new EnglishWordsFileRepository();
+      _userListRepository = new UsersListFileRepository();
+      _userDataRepository = new UserDataFileRepository();
       _userList = _userListRepository.LoadUsersList();
+      Sessions = new List<User>();
       EnglishWords = _wordRepository.LoadWords();
     }
-
-    public void SaveSession(User currentSession)
-    {
-      CurrentSession = currentSession;
-    }
-
     
-    public List<EnglishWord> EnglishWords { set; get; }
-    public User CurrentSession {private set; get; }
+    public List<EnglishWord> EnglishWords {private set; get; }
+    public List<User> Sessions {private set; get; }
     private EnglishWordsFileRepository _wordRepository;
     private UsersListFileRepository _userListRepository;
     private UserDataFileRepository _userDataRepository;

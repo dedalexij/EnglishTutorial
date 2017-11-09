@@ -12,14 +12,18 @@ namespace EnglishTutorial.Domain
 {
   public class User
   {
-    public User()
-    {
-      Vocabulary = new List<WordInStudy>();
-    }
+
     [JsonConstructor]
-    public User( List<WordInStudy> list)
+    public User(string nickname, List<WordInStudy> list) 
     {
+      Nickname = nickname;
       Vocabulary = list;
+    }
+
+    public User(string nickname)
+    {
+      Nickname = nickname;
+      Vocabulary = new List<WordInStudy>();
     }
 
     public int ExistOrNotExistWord(string word)
@@ -62,6 +66,8 @@ namespace EnglishTutorial.Domain
     {
       Vocabulary.Add(new WordInStudy(newWord));
     }
+
+    public string Nickname { get; }
     public List<WordInStudy> Vocabulary { set; get; }
   }
 }

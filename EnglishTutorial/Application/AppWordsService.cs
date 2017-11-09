@@ -10,13 +10,14 @@ namespace EnglishTutorial.Application
     public AppWordsService(AppUserService userService)
     {
       EnglishWords = userService.EnglishWords;
-      CurrentSession = userService.CurrentSession;
+      Sessions = userService.Sessions;
     }
 
-    public string GetNewWord()
+    public string GetNewWord(string nickname, int count)
     {
+      var userNum = GetUserNumInSessions(nickname);
       Random random = new Random();
-      if (UnexaminedWords() == false)
+      if (UnexaminedWords(userNum) == false)
       {
         return "Вы изучили все слова";
       }
@@ -24,30 +25,38 @@ namespace EnglishTutorial.Application
       {
         _lastWordNum = random.Next(EnglishWords.Count);
         
-      } while (CurrentSession.Vocabulary.Any(item => EnglishWords[_lastWordNum].Word == item.Word && item.Count == 3));
+      } while (Sessions[userNum].Vocabulary.Any(item => EnglishWords[_lastWordNum].Word == item.Word && item.Count == count));
       var word = EnglishWords[_lastWordNum].Word;
       _translation = GetTranslation(_lastWordNum);
       string toReturn = String.Format("Перевод слова {0} - {1}?", word, _translation);
       return toReturn;
     }
 
-    public List<WordInStudy> ShowProgress()
+    private int GetUserNumInSessions(string nickname)
     {
-      return CurrentSession.Vocabulary;
+      var id = Sessions.First(user => user.Nickname == nickname);
+      return Sessions.IndexOf(id);
     }
-    public string Check(string ans)
+
+    public List<WordInStudy> ShowProgress(string nickname)
     {
+      var userNum = GetUserNumInSessions(nickname);
+      return Sessions[userNum].Vocabulary;
+    }
+    public string Check(string ans, string nickname)
+    {
+      var userNum = GetUserNumInSessions(nickname);
       var answer = Answer(ans);
       if (EnglishWords[_lastWordNum].Translation == _translation)
       {
         if (answer == true)
         {
-          CurrentSession.RiseCount(EnglishWords[_lastWordNum].Word);
+          Sessions[userNum].RiseCount(EnglishWords[_lastWordNum].Word);
           return "Верно";
         }
         else
         {
-          CurrentSession.ReduceCount(EnglishWords[_lastWordNum].Word);
+          Sessions[userNum].ReduceCount(EnglishWords[_lastWordNum].Word);
           return "Не верно";
         }
       }
@@ -55,12 +64,12 @@ namespace EnglishTutorial.Application
       {
         if (answer == false)
         {
-          CurrentSession.RiseCount(EnglishWords[_lastWordNum].Word);
+          Sessions[userNum].RiseCount(EnglishWords[_lastWordNum].Word);
           return "Верно";
         }
         else
         {
-          CurrentSession.ReduceCount(EnglishWords[_lastWordNum].Word);
+          Sessions[userNum].ReduceCount(EnglishWords[_lastWordNum].Word);
           return "Не верно";
         }
       }
@@ -77,9 +86,10 @@ namespace EnglishTutorial.Application
       throw  new Exception("Неверный формат ответа");
     }
 
-    public void SaveSession(AppUserService session)
+    public void SaveSession(AppUserService session, string nickname)
     {
-      session.SaveSession(CurrentSession);
+      var userNum = GetUserNumInSessions(nickname);
+      session.SaveData(Sessions[userNum]);
     }
     private string GetTranslation(int wordNum)
     {
@@ -108,21 +118,21 @@ namespace EnglishTutorial.Application
       throw new Exception("что-то пошло не так");
     }
 
-    private bool UnexaminedWords()
+    private bool UnexaminedWords(int userNum)
     {
-      if (CurrentSession.Vocabulary.Any(item => item.Count != 3))
+      if (Sessions[userNum].Vocabulary.Any(item => item.Count != 3))
       {
         return true;
       }
       foreach (var word in EnglishWords)
       {
-        if (!CurrentSession.Vocabulary.Any(item => item.Word == word.Word))
+        if (!Sessions[userNum].Vocabulary.Any(item => item.Word == word.Word))
           return true;
       }
       return false;
     }
     public List<EnglishWord> EnglishWords { set; get; }
-    public User CurrentSession;
+    public List<User> Sessions;
     private int _lastWordNum;
     private string _translation;
   }

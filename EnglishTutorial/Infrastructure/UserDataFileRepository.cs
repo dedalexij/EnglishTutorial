@@ -1,4 +1,5 @@
-﻿using EnglishTutorial.Domain;
+﻿using System.Collections.Generic;
+using EnglishTutorial.Domain;
 using Newtonsoft.Json;
 using System.IO;
 
@@ -6,29 +7,29 @@ namespace EnglishTutorial.Infrastructure
 {
   class UserDataFileRepository
   {
-    public UserDataFileRepository(string nickname)
+    public UserDataFileRepository()
     {
-      _filePath = string.Format("{0}.json", nickname);
     }
 
-    public User LoadUserData()
+    public User LoadUserData(string nickname)
     {
+      var filePath = nickname + ".json";
       try
       {
-        var rawFiles = File.ReadAllText(_filePath);
+        var rawFiles = File.ReadAllText(filePath);
         var user = JsonConvert.DeserializeObject<User>(rawFiles);
         return user;
       }
       catch (FileNotFoundException)
       {
-        throw new FileNotFoundException("Пользователь не найден");
+        throw new FileNotFoundException("Файл не найден");
       }
     }
     public void SaveUserData(User user)
     {
       var serialized = JsonConvert.SerializeObject(user);
-      File.WriteAllText(_filePath, serialized);
+      var filePath  = user.Nickname + ".json";
+      File.WriteAllText(filePath, serialized);
     }
-    private readonly string _filePath;
   }
 }
