@@ -11,3 +11,7 @@ C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProje
 C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProject1\obj\Debug\UnitTestProject1.csproj.CoreCompileInputs.cache
 C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProject1\obj\Debug\UnitTestProject1.dll
 C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProject1\bin\Debug\EnglishTutorial.dll
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProject1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProject1\bin\Debug\EnglishTutorial.pdb
+C:\Users\Ded\Documents\Visual Studio 2017\Projects\EnglishTutorial\UnitTestProject1\bin\Debug\Newtonsoft.Json.xml
